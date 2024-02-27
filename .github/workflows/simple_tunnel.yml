@@ -28,7 +28,7 @@ jobs:
 
     - name: Setup SSH Tunnel
       run: |
-        ssh -i bastion-key.pem -f -N -L 5432:dev-staging-09-01-2024.cujlxychjz9q.eu-north-1.rds.amazonaws.com:5432 ec2-user@13.51.55.222
+        ssh -o StrictHostKeyChecking=no -i bastion-key.pem -f -N -L 5432:dev-staging-09-01-2024.cujlxychjz9q.eu-north-1.rds.amazonaws.com:5432 ec2-user@13.51.55.222
       
     - name: Install PostgreSQL Client
       run: sudo apt-get install postgresql-client -y

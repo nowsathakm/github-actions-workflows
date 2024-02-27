@@ -15,6 +15,13 @@ jobs:
     environment: development
     
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Update Version File
+      run: echo "${{ github.event.inputs.version }}" > .version
+      shell: bash
+
     - name: Setup SSH Tunnel
       uses: appleboy/ssh-action@master
       with:

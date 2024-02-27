@@ -11,8 +11,8 @@ on:
 jobs:
   update:
     name: branch - ${{ github.ref_name }}
-    runs-on: ubuntu-latest
     environment: development
+    runs-on: ubuntu-latest
     env:
       RDS_HOST: ${{ secrets.RDS_HOST }}
       BASTION_USER: ${{ secrets.BASTION_USER }}

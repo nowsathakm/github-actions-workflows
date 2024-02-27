@@ -29,7 +29,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.BASTION_SSH_PRIVATE_KEY }}
         port: 5432
-        target: ${{ secrets.RDS_HOST }}
+        target: 'dev-staging-09-01-2024.cujlxychjz9q.eu-north-1.rds.amazonaws.com'
         local_port: 5432
         timeout: 1m
       

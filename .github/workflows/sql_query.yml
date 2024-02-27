@@ -1,0 +1,34 @@
+name: Update PostgreSQL
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (eg: 0.19.435)'
+        required: true
+        default: '0.19.435'
+
+jobs:
+  update_postgresql:
+    name: branch - ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    environment: development
+    
+    steps:
+    - name: Setup SSH Tunnel
+      uses: appleboy/ssh-action@master
+      with:
+        host: 13.51.55.222
+        username: ec2-user
+        key: ${{ secrets.BASTION_SSH_PRIVATE_KEY }}
+        port: 5432
+        target: ${{ RDS_HOST }}
+        local_port: 5432
+        timeout: 1m
+      
+    - name: Install PostgreSQL Client
+      run: sudo apt-get install postgresql-client -y
+      
+    - name: Run PostgreSQL update query
+      run: |
+        echo "All success.."

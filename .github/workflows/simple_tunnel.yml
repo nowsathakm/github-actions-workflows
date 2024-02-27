@@ -31,6 +31,7 @@ jobs:
       with:
         file-path: .version
         commit-msg: '[updated] .version file with ${{ github.event.inputs.version }}'
+        branch: ${{ github.ref_name }}
         github-token: ${{ secrets.REPO_TOKEN }}
       
 

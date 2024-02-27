@@ -13,7 +13,6 @@ jobs:
     name: branch - ${{ github.ref_name }}
     runs-on: ubuntu-latest
     environment: development
-    
     env:
       RDS_HOST: ${{ secrets.RDS_HOST }}
       BASTION_USER: ${{ secrets.BASTION_USER }}

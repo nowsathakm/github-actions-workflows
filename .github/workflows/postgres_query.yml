@@ -40,4 +40,4 @@ jobs:
 
     - name: Run Update Queries
       run: |
-        whcih psql
+        which psql

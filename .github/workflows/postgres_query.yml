@@ -10,8 +10,10 @@ on:
 
 jobs:
   update:
+    name: branch - ${{ github.ref_name }}
     runs-on: ubuntu-latest
-
+    environment: development
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v2

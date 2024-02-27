@@ -29,7 +29,7 @@ jobs:
     - name: Update repo .version file
       uses: test-room-7/action-update-file@v1
       with:
-        file-path: ~/.version
+        file-path: .version
         commit-msg: '[updated] .version file with ${{ github.event.inputs.version }}'
         github-token: ${{ secrets.REPO_TOKEN }}
       

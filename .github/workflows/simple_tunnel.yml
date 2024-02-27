@@ -1,0 +1,40 @@
+name: Update PostgreSQL
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (eg: 0.19.435)'
+        required: true
+        default: '0.19.435'
+
+jobs:
+  update_postgresql:
+    name: branch - ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    environment: development
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Update Version File & Set key
+      run: |
+        echo "${{ github.event.inputs.version }}" > .version
+        echo "${{ secrets.BASTION_SSH_PRIVATE_KEY }}" > bastion-key.pem
+        sudo chmod 600 bastion-key.pem
+        ls -lart
+      
+
+    - name: Setup SSH Tunnel
+      run: |
+        ssh -i bastion-key.pem -f -N -L 5432:dev-staging-09-01-2024.cujlxychjz9q.eu-north-1.rds.amazonaws.com:5432 ec2-user@13.51.55.222
+      
+    - name: Install PostgreSQL Client
+      run: sudo apt-get install postgresql-client -y
+      
+    - name: Run PostgreSQL update query
+      run: |
+        rm -rf bastion-key.pem
+        echo "All success.."
+        

@@ -30,7 +30,7 @@ jobs:
       uses: test-room-7/action-update-file@v1
       with:
         file-path: ./.version
-        commit-msg: '[updated] .version ${{ github.event.inputs.version }}'
+        commit-msg: '[updated] .version file with ${{ github.event.inputs.version }}'
         github-token: ${{ secrets.REPO_TOKEN }}
       
 

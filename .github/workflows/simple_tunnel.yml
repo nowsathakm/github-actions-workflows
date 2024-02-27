@@ -1,4 +1,4 @@
-name: Update PostgreSQL
+name: SSH Tunnel
 
 on:
   workflow_dispatch:

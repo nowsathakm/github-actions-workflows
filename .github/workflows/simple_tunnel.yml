@@ -37,12 +37,12 @@ jobs:
 
     - name: Setup SSH Tunnel
       run: |
-        ssh -o StrictHostKeyChecking=no -i bastion-key.pem -f -N -L 5432:dev-staging-09-01-2024.cujlxychjz9q.eu-north-1.rds.amazonaws.com:5432 ec2-user@13.51.55.222 &
+        ssh -o StrictHostKeyChecking=no -i bastion-key.pem -f -N -L 5432:${{ secrets.RDS_HOST }}:5432 ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }}
       
     - name: Run update query
       run: |
         IFS="." read -r V_MAJOR V_MINOR V_PATCH <<< ${{ github.event.inputs.version }}
-        psql -h localhost -p 5432 -U spt_master -d spt -c "select * from t_app WHERE platform_version like '$V_MAJOR.$V_MINOR.%' order by created_at desc limit 10;"
+        psql -h localhost -p 5432 -U ${{ POSTGRES_USER }} -d ${{ POSTGRES_DB }} -c "select * from t_app WHERE platform_version like '$V_MAJOR.$V_MINOR.%' order by created_at desc limit 10;"
       env:
         PGPASSWORD: ${{ secrets.DB_PASSWORD }}
         

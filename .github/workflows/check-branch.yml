@@ -1,0 +1,42 @@
+name: Check Deployment Branch
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Select the environment
+        options: 
+          - development
+          - staging
+          - production
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  deploy-migration:
+    name: build tag - ${{ github.ref_name }} - ${{ github.event.inputs.name }}
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.name }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Check if the branch is correct for the environment
+      - name: Verify Branch
+        id: verify_branch
+        run: |
+          if [[ "${{ github.event.inputs.name }}" == "staging" && "${{ github.ref_name }}" != "staging" ]]; then
+            echo "Selected environment is staging but branch is not staging."
+            exit 1
+          elif [[ "${{ github.event.inputs.name }}" == "production" && "${{ github.ref_name }}" != "main" ]]; then
+            echo "Selected environment is production but branch is not main."
+            exit 1
+          elif [[ "${{ github.event.inputs.name }}" == "development" ]]; then
+            echo "Development environment selected, any branch is allowed."
+          fi
+
+      # Continue with the rest of the steps if branch verification passed
+      - name: Continue Deployment
+        run: echo "Branch verification passed. Proceeding with deployment."

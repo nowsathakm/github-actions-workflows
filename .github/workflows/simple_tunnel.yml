@@ -42,7 +42,7 @@ jobs:
     - name: Run update query
       run: |
         IFS="." read -r V_MAJOR V_MINOR V_PATCH <<< ${{ github.event.inputs.version }}
-        psql -h localhost -p 5432 -U ${{ POSTGRES_USER }} -d ${{ POSTGRES_DB }} -c "select * from t_app WHERE platform_version like '$V_MAJOR.$V_MINOR.%' order by created_at desc limit 10;"
+        psql -h localhost -p 5432 -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB }} -c "select * from t_app WHERE platform_version like '$V_MAJOR.$V_MINOR.%' order by created_at desc limit 10;"
       env:
         PGPASSWORD: ${{ secrets.DB_PASSWORD }}
         

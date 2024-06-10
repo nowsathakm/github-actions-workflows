@@ -25,11 +25,11 @@ jobs:
     - name: Setup SSH Tunnel
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.BASTION_HOST_IP }}
+        host: ${{ secrets.BASTION_HOST }}
         username: ec2-user
         key: ${{ secrets.BASTION_SSH_PRIVATE_KEY }}
         port: 5432
-        target: ${{ secrets.RDS_ENDPOINT }}
+        target: ${{ secrets.RDS_HOST }}
         local_port: 5432
         timeout: 1m
       
